@@ -1,10 +1,15 @@
 import { useState } from 'react'
+import { useJobsContext } from '../hooks/UseJobsContext'
+
 
 const JobForm = () => {
+  const { dispatch } = useJobsContext()
+
   const [title, setTitle] = useState('')
   const [sets, setSets] = useState('')
   const [reps, setReps] = useState('')
   const [error, setError] = useState(null)
+  const [emptyFields, setEmptyFields] = useState([])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -22,13 +27,15 @@ const JobForm = () => {
 
     if (!response.ok) {
       setError(json.error)
+      setEmptyFields(json.emptyFields)
     }
     if (response.ok) {
       setError(null)
       setTitle('')
       setSets('')
       setReps('')
-      console.log('new job added:', json)
+      setEmptyFields([])
+      dispatch({type: 'CREATE_JOB', payload: json})
     }
 
   }
@@ -42,6 +49,7 @@ const JobForm = () => {
         type="text" 
         onChange={(e) => setTitle(e.target.value)} 
         value={title}
+        className={emptyFields.includes('title') ? 'error' : ''}
       />
 
       <label>Sets (in kg):</label>
@@ -49,6 +57,7 @@ const JobForm = () => {
         type="number" 
         onChange={(e) => setSets(e.target.value)} 
         value={sets}
+        className={emptyFields.includes('sets') ? 'error' : ''}
       />
 
       <label>Number of Reps:</label>
@@ -56,6 +65,7 @@ const JobForm = () => {
         type="number" 
         onChange={(e) => setReps(e.target.value)} 
         value={reps} 
+        className={emptyFields.includes('reps') ? 'error' : ''}
       />
 
       <button>Add Job</button>
