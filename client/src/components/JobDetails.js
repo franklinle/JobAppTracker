@@ -1,5 +1,7 @@
 import { useJobsContext } from "../hooks/UseJobsContext"
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import React from 'react';
+
 
 const JobDetails = ({ job }) => {
     const { dispatch } = useJobsContext()
@@ -16,11 +18,13 @@ const JobDetails = ({ job }) => {
         }
     }
 
+    
+
     return (
       <div className="job-details">
-        <h4>{job.title}</h4>
+        <h4>{job.position}</h4>
         <p><strong>Load (kg): </strong>{job.sets}</p>
-        <p><strong>Number of reps: </strong>{job.reps}</p>
+        <p><strong>Number of positiondd: </strong>{job.company}</p>
         <p>{formatDistanceToNow(new Date(job.createdAt), { addSuffix: true })}</p>
         <span onClick={handleClick}>Delete</span>
       </div>

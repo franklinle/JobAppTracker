@@ -1,20 +1,22 @@
 import { useState } from 'react'
 import { useJobsContext } from '../hooks/UseJobsContext'
+import React from 'react';
+
 
 
 const JobForm = () => {
   const { dispatch } = useJobsContext()
 
-  const [title, setTitle] = useState('')
+  const [company, setCompany] = useState('')
   const [sets, setSets] = useState('')
-  const [reps, setReps] = useState('')
+  const [position, setPosition] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const job = {title, sets, reps}
+    const job = {company, sets, position}
     
     const response = await fetch('/api/jobs', {
       method: 'POST',
@@ -31,9 +33,9 @@ const JobForm = () => {
     }
     if (response.ok) {
       setError(null)
-      setTitle('')
+      setCompany('')
       setSets('')
-      setReps('')
+      setPosition('')
       setEmptyFields([])
       dispatch({type: 'CREATE_JOB', payload: json})
     }
@@ -44,28 +46,28 @@ const JobForm = () => {
     <form className="create" onSubmit={handleSubmit}> 
       <h3>Add a New Job</h3>
 
-      <label>Excersize Title:</label>
+      <label>Position:</label>
       <input 
         type="text" 
-        onChange={(e) => setTitle(e.target.value)} 
-        value={title}
-        className={emptyFields.includes('title') ? 'error' : ''}
+        onChange={(e) => setCompany(e.target.value)} 
+        value={company}
+        className={emptyFields.includes('company') ? 'error' : ''}
       />
 
-      <label>Sets (in kg):</label>
+      <label>Company</label>
       <input 
-        type="number" 
+        type="text" 
         onChange={(e) => setSets(e.target.value)} 
         value={sets}
         className={emptyFields.includes('sets') ? 'error' : ''}
       />
 
-      <label>Number of Reps:</label>
+      <label>Number of Position:</label>
       <input 
-        type="number" 
-        onChange={(e) => setReps(e.target.value)} 
-        value={reps} 
-        className={emptyFields.includes('reps') ? 'error' : ''}
+        type="text" 
+        onChange={(e) => setPosition(e.target.value)} 
+        value={position} 
+        className={emptyFields.includes('position') ? 'error' : ''}
       />
 
       <button>Add Job</button>

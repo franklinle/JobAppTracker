@@ -1,12 +1,13 @@
 import { useEffect } from "react"
 import { useJobsContext } from "../hooks/UseJobsContext"
+import React from 'react';
+
 
 import JobDetails from '../components/JobDetails'
 import JobForm from "../components/JobForm"
 
 
 const Home = () => {
-    // const [jobs, setJobs] = useState(null)
     const { jobs, dispatch } = useJobsContext()
 
 
@@ -23,6 +24,8 @@ const Home = () => {
     
         fetchJobs()
       }, [dispatch])
+
+      
 
     return (
         <div className="home">

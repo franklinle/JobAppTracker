@@ -6,16 +6,16 @@ const Schema = mongoose.Schema
 
 // Structure of data
 const jobSchema = new Schema({
-    title: {
+    position: {
         type: String,
         required: true
     },
-    reps: {
-        type: Number, 
+    company: {
+        type: String, 
         required: true
     },
     sets: {
-        type: Number, 
+        type: String, 
         required: true
     }
 }, {timestamps: true}) //logs when the doc was created and last updated

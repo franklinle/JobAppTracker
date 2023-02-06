@@ -1,4 +1,6 @@
 import { createContext, useReducer } from 'react'
+import React from 'react';
+
 
 export const JobsContext = createContext()
 
@@ -19,6 +21,7 @@ export const jobsReducer = (state, action) => {
       return {
         jobs: state.jobs.filter((j) => j._id !== action.payload._id)
       }
+    
       default:
       return state
   }
