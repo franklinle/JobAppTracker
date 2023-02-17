@@ -2,19 +2,23 @@ const express = require('express')
 const Job = require('../models/jobModel')
 const {
     createJob,
-    getJob,
-    getJobs,
+    getJobs_recent,
+    getJobs_latest,
     deleteJob,
     updateJob
 } = require('../controllers/jobController')
 
 const router = express.Router()
 
-//get all jobs
-router.get('/', getJobs)
+//get newest to oldest jobs
+router.get('/', getJobs_recent)
+
+//oldest to newest
+router.get('/', getJobs_latest)
+
 
 //get a single job
-router.get('/:id', getJob)
+// router.get('/:id', getJob)
 
 //POST a new job
 router.post('/', createJob)

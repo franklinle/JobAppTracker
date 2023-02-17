@@ -1,12 +1,20 @@
 const Job = require('../models/jobModel')
 const mongoose = require('mongoose')
 
-// get all jobs
-const getJobs = async(req, res) => {
+// get jobs by newest to oldest
+const getJobs_recent = async(req, res) => {
     const jobs = await Job.find({}).sort({createdAt: -1})
 
     res.status(200).json(jobs)
 }
+
+// get jobs by newest to oldest
+const getJobs_latest = async(req, res) => {
+    const jobs = await Job.find({}).sort({createdAt: 1})
+
+    res.status(200).json(jobs)
+}
+
 
 // get a single job
 const getJob = async (req, res) => {
@@ -27,7 +35,7 @@ const getJob = async (req, res) => {
 
 // create a new job
 const createJob = async (req, res) => {
-    const {position, company, sets} = req.body
+    const {position, company, status} = req.body
 
     let emptyFields = []
 
@@ -37,8 +45,8 @@ const createJob = async (req, res) => {
     if (!company) {
         emptyFields.push('company')
     }
-    if (!sets) {
-        emptyFields.push('sets')
+    if (!status) {
+        emptyFields.push('status')
     }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all fields', emptyFields })
@@ -46,7 +54,7 @@ const createJob = async (req, res) => {
 
     // add doc to db
     try {
-        const job = await Job.create({position, company, sets})
+        const job = await Job.create({position, company, status})
         res.status(200).json(job)
     } catch(error) {
         res.status(400).json({error: error.message})
@@ -95,7 +103,8 @@ const updateJob = async (req, res) => {
 // Exports
 module.exports = {
     createJob,
-    getJobs,
+    getJobs_recent,
+    getJobs_latest,
     getJob,
     deleteJob,
     updateJob

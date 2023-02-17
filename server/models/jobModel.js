@@ -14,7 +14,7 @@ const jobSchema = new Schema({
         type: String, 
         required: true
     },
-    sets: {
+    status: {
         type: String, 
         required: true
     }
