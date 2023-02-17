@@ -5,7 +5,7 @@ const {
     getJobs_recent,
     getJobs_latest,
     deleteJob,
-    updateJob
+    editJob
 } = require('../controllers/jobController')
 
 const router = express.Router()
@@ -14,7 +14,7 @@ const router = express.Router()
 router.get('/', getJobs_recent)
 
 //oldest to newest
-router.get('/', getJobs_latest)
+// router.get('/', getJobs_latest)
 
 
 //get a single job
@@ -27,6 +27,6 @@ router.post('/', createJob)
 router.delete('/:id', deleteJob)
 
 //UPDATE a new job 
-router.patch('/:id', updateJob)
+router.patch('/:id', editJob)
 
 module.exports = router

@@ -80,24 +80,51 @@ const deleteJob = async (req, res) => {
     res.status(200).json(job)
 }
 
-// update a job
-const updateJob = async (req, res) => {
-    const { id } = req.params
+// edit a job
+// const editJob = async (req, res) => {
+//     const { id } = req.params
 
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//         return res.status(404).json({error: 'No such job'})
+//     }
+
+//     const job = await Job.findOneAndUpdate({_id: id}, {
+//         ...req.body
+//     })
+
+//     if (!job) {
+//         return res.status(400).json({error: 'No such job'})
+//     }
+
+//     res.status(200).json(job)
+// }
+
+// edit a job
+const editJob = async (req, res) => {
+    // grab id
+    const { id } = req.params;
+  
+    // Checks if mongoDB id is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such job'})
+      return res.status(404).json({ error: "No such job" });
     }
-
-    const job = await Job.findOneAndUpdate({_id: id}, {
-        ...req.body
-    })
-
+  
+    const { position, company, status } = req.body;
+  
+    // find and update job
+    const job = await Job.findOneAndUpdate(
+      { _id: id },
+      { position, company, status },
+      { new: true }
+    );
+  
     if (!job) {
-        return res.status(400).json({error: 'No such job'})
+      return res.status(400).json({ error: "No such job" });
     }
-
-    res.status(200).json(job)
-}
+  
+    res.status(200).json(job);
+  };
+  
 
 
 // Exports
@@ -107,5 +134,5 @@ module.exports = {
     getJobs_latest,
     getJob,
     deleteJob,
-    updateJob
+    editJob
 }

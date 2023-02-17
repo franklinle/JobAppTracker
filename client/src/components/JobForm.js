@@ -8,7 +8,7 @@ const JobForm = () => {
   const { dispatch } = useJobsContext()
 
   const [company, setCompany] = useState('')
-  const [sets, setSets] = useState('')
+  const [status, setStatus] = useState('')
   const [position, setPosition] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
@@ -16,7 +16,7 @@ const JobForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const job = {company, sets, position}
+    const job = {company, status, position}
     
     const response = await fetch('/api/jobs', {
       method: 'POST',
@@ -34,7 +34,7 @@ const JobForm = () => {
     if (response.ok) {
       setError(null)
       setCompany('')
-      setSets('')
+      setStatus('')
       setPosition('')
       setEmptyFields([])
       dispatch({type: 'CREATE_JOB', payload: json})
@@ -49,26 +49,27 @@ const JobForm = () => {
       <label>Position:</label>
       <input 
         type="text" 
+        onChange={(e) => setPosition(e.target.value)} 
+        value={position} 
+        className={emptyFields.includes('position') ? 'error' : ''}
+      />
+
+      <label>Company:</label>
+      <input 
+        type="text" 
         onChange={(e) => setCompany(e.target.value)} 
         value={company}
         className={emptyFields.includes('company') ? 'error' : ''}
       />
 
-      <label>Company</label>
+      <label>Status:</label>
       <input 
         type="text" 
-        onChange={(e) => setSets(e.target.value)} 
-        value={sets}
-        className={emptyFields.includes('sets') ? 'error' : ''}
+        onChange={(e) => setStatus(e.target.value)} 
+        value={status}
+        className={emptyFields.includes('status') ? 'error' : ''}
       />
-
-      <label>Number of Position:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setPosition(e.target.value)} 
-        value={position} 
-        className={emptyFields.includes('position') ? 'error' : ''}
-      />
+      
 
       <button>Add Job</button>
       {error && <div className="error">{error}</div>}
@@ -77,3 +78,4 @@ const JobForm = () => {
 }
 
 export default JobForm
+

@@ -20,12 +20,22 @@ export const jobsReducer = (state, action) => {
     case 'DELETE_JOB':
       return {
         jobs: state.jobs.filter((j) => j._id !== action.payload._id)
-      }
-    
-      default:
+      }   
+      case 'EDIT_JOB':
+        return {
+          jobs: state.jobs.map((j) => {
+            if (j._id === action.payload._id) {
+              return action.payload;
+            } else {
+              return j;
+            }
+          })
+        }
+    default:
       return state
   }
 }
+
 
 
 // children components represent App that's wrapped in the index.js file
